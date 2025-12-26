@@ -194,6 +194,7 @@
             createDust();     
             setupPostProcessing();
             setupEvents();
+            loadHardcodedPhotos();
             await initMediaPipe();
             
             const loader = document.getElementById('loader');
@@ -483,6 +484,24 @@
             
             photoMeshGroup.add(group);
             particleSystem.push(new Particle(group, 'PHOTO', false));
+        }
+
+        function loadHardcodedPhotos() {
+            const loader = new THREE.TextureLoader();
+            const photos = [
+                'images/photo1.jpg',
+                'images/photo2.png',
+                'images/photo3.png',
+                'images/photo4.png',
+                'images/photo5.png',
+            ];
+
+            photos.forEach(path => {
+                loader.load(path, texture => {
+                    texture.colorSpace = THREE.SRGBColorSpace;
+                    addPhotoToScene(texture);
+                });
+            });
         }
         
         function handleImageUpload(e) {
